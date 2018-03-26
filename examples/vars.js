@@ -131,4 +131,12 @@ module.exports = [
       "This demonstrates how to implement a toolbox to add and remove widgets."
     ]
   }
+  {
+	  title: "Bad onWidthChange",
+	  source: "badOnWidthChange",
+	  paragraphs: [
+		  "This test case demonstrates how the callback onWidthChange is only called when the breakpoint changes. " +
+		  "Resize the browser window to see how the rowHeight changes on breakpoints, but not on every other change of width."
+	  ]
+  }
 ];
