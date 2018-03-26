@@ -6,7 +6,7 @@ const ResponsiveReactGridLayout = WidthProvider(Responsive);
 class BadOnWidthChangeExample extends React.Component {
 	static defaultProps = {
 		className: "layout",
-		rowHeight: 50,
+		rowHeight: 30,
 		onLayoutChange: function () { },
 		cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 },
 		initialLayout: generateLayout()
@@ -16,7 +16,8 @@ class BadOnWidthChangeExample extends React.Component {
 		currentBreakpoint: "lg",
 		compactType: "vertical",
 		mounted: false,
-		layouts: { lg: this.props.initialLayout }
+		layouts: { lg: this.props.initialLayout },
+		rowHeight: 30
 	};
 
 	componentDidMount() {
@@ -43,8 +44,7 @@ class BadOnWidthChangeExample extends React.Component {
 	}
 
 	onWidthChange = (width, margin, cols) => {
-		var height = Math.round((width - 10 * (cols - 1)) / cols);
-		console.log('rowHeight = ' + height);
+		var height = Math.round((width - 10 * (cols + 1)) / (cols*3));
 		this.setState({
 			rowHeight: height
 		});
@@ -98,11 +98,12 @@ class BadOnWidthChangeExample extends React.Component {
 				<ResponsiveReactGridLayout
 					{...this.props}
 					layouts={this.state.layouts}
+					rowHeight={this.state.rowHeight}
 					onBreakpointChange={this.onBreakpointChange}
 					onLayoutChange={this.onLayoutChange}
 					onWidthChange={this.onWidthChange}
 					// WidthProvider option
-					measureBeforeMount={false}
+					measureBeforeMount={true}
 					// I like to have it animate on mount. If you don't, delete `useCSSTransforms` (it's default `true`)
 					// and set `measureBeforeMount={true}`.
 					useCSSTransforms={this.state.mounted}
@@ -116,7 +117,7 @@ class BadOnWidthChangeExample extends React.Component {
 	}
 }
 
-module.exports = ShowcaseLayout;
+module.exports = BadOnWidthChangeExample;
 
 function generateLayout() {
 	return _.map(_.range(0, 25), function (item, i) {
